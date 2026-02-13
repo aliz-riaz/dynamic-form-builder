@@ -358,37 +358,79 @@ export default function FormRenderer({
         )}
       </Paper>
 
-      {schema.sections.map((section) => (
-        <Paper key={section.id} sx={{ p: 3, mb: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            {section.title}
-          </Typography>
-          {section.description && (
-            <Typography variant="body2" color="text.secondary" paragraph>
-              {section.description}
-            </Typography>
-          )}
 
-          <Box
+
+{schema.sections.map((section) => (
+  <Paper key={section.id} sx={{ p: 3, mb: 3 }}>
+    <Typography variant="h6" gutterBottom>
+      {section.title}
+    </Typography>
+    {section.description && (
+      <Typography variant="body2" color="text.secondary" paragraph>
+        {section.description}
+      </Typography>
+    )}
+
+    {/* Visual Grid Guide */}
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: 2,
+        mt: 2,
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'repeating-linear-gradient(90deg, #e0e0e0 0px, #e0e0e0 1px, transparent 1px, transparent calc(25% - 8px))',
+          pointerEvents: 'none',
+          opacity: 0.2,
+          zIndex: 0,
+        },
+      }}
+    >
+      {section.fields.map((field) => (
+        <Box
+          key={field.id}
+          sx={{
+            gridColumn: `span ${field.columnSpan || 2}`,
+            position: 'relative',
+            p: 1,
+            border: '1px dashed transparent',
+            borderRadius: 1,
+            transition: 'all 0.2s',
+            '&:hover': {
+              bgcolor: '#f5f5f5',
+              borderColor: '#1976d2',
+            },
+          }}
+        >
+          <Typography
+            variant="caption"
             sx={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: 2,
-              mt: 2,
+              position: 'absolute',
+              top: -8,
+              right: 4,
+              bgcolor: 'white',
+              px: 0.5,
+              color: 'text.secondary',
+              fontSize: '0.7rem',
+              border: '1px solid #e0e0e0',
+              borderRadius: 0.5,
             }}
           >
-            {section.fields.map((field) => (
-              <Box
-                key={field.id}
-                sx={{ gridColumn: `span ${field.columnSpan || 2}` }}
-              >
-                {renderField(field)}
-              </Box>
-            ))}
-          </Box>
-        </Paper>
+            {field.columnSpan || 2}/4
+          </Typography>
+          {renderField(field)}
+        </Box>
       ))}
-
+    </Box>
+  </Paper>
+))}
       <Paper sx={{ p: 2, position: 'sticky', bottom: 0, zIndex: 1 }}>
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
           <Button 

@@ -33,7 +33,7 @@ A comprehensive form builder system built with Next.js, TypeScript, Material-UI,
 
 1. **Clone the repository**
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/aliz-riaz/dynamic-form-builder
 cd dynamic-form-builder
 ```
 
@@ -371,7 +371,7 @@ User Action → Component → Zustand Store → LocalStorage Persistence
 ## 👤 Author
 
 Your Name  
-GitHub: [@yourusername](https://github.com/yourusername)
+GitHub: (https://github.com/aliz-riaz)
 
 ## 📄 License
 

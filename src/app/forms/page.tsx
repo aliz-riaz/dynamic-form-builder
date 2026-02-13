@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Box,
   Button,
@@ -17,16 +18,29 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useFormStore } from '@/stores/formStore';
-import Link from 'next/link';
 
 export default function FormsPage() {
+  const router = useRouter();
   const { forms, deleteForm } = useFormStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleDelete = (id: string) => {
     if (confirm('Are you sure you want to delete this form?')) {
       deleteForm(id);
     }
   };
+
+  if (!mounted) {
+    return (
+      <Box>
+        <Typography variant="h4">Loading...</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box>
@@ -35,8 +49,7 @@ export default function FormsPage() {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          component={Link}
-          href="/forms/create"
+          onClick={() => router.push('/forms/create')}
         >
           Create New Form
         </Button>
@@ -50,8 +63,7 @@ export default function FormsPage() {
           <Button
             variant="contained"
             startIcon={<AddIcon />}
-            component={Link}
-            href="/forms/create"
+            onClick={() => router.push('/forms/create')}
             sx={{ mt: 2 }}
           >
             Create Your First Form
@@ -80,8 +92,7 @@ export default function FormsPage() {
                   </TableCell>
                   <TableCell align="right">
                     <IconButton
-                      component={Link}
-                      href={`/forms/edit/${form.id}`}
+                      onClick={() => router.push(`/forms/edit/${form.id}`)}
                       color="primary"
                     >
                       <EditIcon />

@@ -1,9 +1,10 @@
-'use client';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
-import Link from 'next/link';
-import { theme } from './theme';
+import type { Metadata } from 'next';
+import ClientLayout from '@/components/ClientLayout';
+
+export const metadata: Metadata = {
+  title: 'Dynamic Form Builder',
+  description: 'Build, render and manage dynamic forms',
+};
 
 export default function RootLayout({
   children,
@@ -11,30 +12,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Dynamic Form Builder
-              </Typography>
-              <Button color="inherit" component={Link} href="/forms">
-                Forms
-              </Button>
-              <Button color="inherit" component={Link} href="/render">
-                Render
-              </Button>
-              <Button color="inherit" component={Link} href="/data">
-                Data
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <Box sx={{ p: 3 }}>
-            {children}
-          </Box>
-        </ThemeProvider>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" 
+          rel="stylesheet" 
+        />
+      </head>
+      <body suppressHydrationWarning>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
